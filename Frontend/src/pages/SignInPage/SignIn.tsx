@@ -19,9 +19,12 @@ import "./SignIn.css";
 import {Copyright} from "../../components/copyright.tsx";
 import {UserService} from "../../services/UserService.ts";
 import {useNavigate} from "react-router-dom";
+import {TokenAtom} from "../../atoms/TokenAtom.tsx";
+import {useAtom} from "jotai";
 
 export const SignIn: React.FunctionComponent = () => {
   const navigate = useNavigate();
+  const [token, setToken] = useAtom(TokenAtom);
   const userService = new UserService();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,12 +44,11 @@ export const SignIn: React.FunctionComponent = () => {
     try {
       setLoading(true);
 
-      setOpenSnackbar(true);
-      setLoading(false);
-
       await userService.login({
         email: email,
         password: password,
+      }).then(response => {
+        setToken(response['accessToken']);
       });
 
       setTimeout(() => {
@@ -83,6 +85,7 @@ export const SignIn: React.FunctionComponent = () => {
                 component="form"
                 className="formBox"
                 noValidate
+                onSubmit={handleSubmit}
             >
               <TextField
                   margin="normal"
@@ -138,7 +141,6 @@ export const SignIn: React.FunctionComponent = () => {
                     variant="contained"
                     className="submitButton"
                     sx={{ backgroundColor: "primary.main" }}
-                    onClick={handleSubmit}
                 >
                   Sign In
                 </Button>

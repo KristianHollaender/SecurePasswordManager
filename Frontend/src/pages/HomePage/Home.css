@@ -1,0 +1,11 @@
+.content {
+    width: 500px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-wrap: wrap;
+    background-color: #000;
+}
