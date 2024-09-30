@@ -1,18 +1,20 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+USER $APP_UID
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 8080
+EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Backend.csproj", "./"]
-RUN dotnet restore "Backend.csproj"
+COPY ["Backend/Backend.csproj", "Backend/"]
+RUN dotnet restore "Backend/Backend.csproj"
 COPY . .
-WORKDIR "/src/"
-RUN dotnet build "Backend.csproj" -c Release -o /app/build
+RUN dotnet build "Backend/Backend.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Backend.csproj" -c Release -o /app/publish /p:UseAppHost=false
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "Backend/Backend.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
