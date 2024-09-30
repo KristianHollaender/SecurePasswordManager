@@ -18,6 +18,8 @@ services:
       dockerfile: ./Backend/Dockerfile
     ports:
       - '9092:80'
+    environment:
+      - ConnectionStrings__AppDb=Data Source=./db.sqlite
 
 networks:
   local_network:
