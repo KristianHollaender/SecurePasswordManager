@@ -35,5 +35,5 @@ public class DatabaseContext : IdentityDbContext
         base.OnModelCreating(builder);
     }
     
-    DbSet<Password> Passwords { get; set; }
+    public DbSet<Password> Passwords { get; set; }
 }
