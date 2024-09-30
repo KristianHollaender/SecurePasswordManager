@@ -9,6 +9,7 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("AppDB");
     options.UseSqlite(connectionString);
+    //options.UseSqlite("Data Source=./db.sqlite");
 });
 
 builder.Services.AddScoped<SeedData>();
@@ -27,6 +28,12 @@ builder.Services.AddIdentityApiEndpoints<User>(options =>
     .AddEntityFrameworkStores<DatabaseContext>();
 
 var app = builder.Build();
+
+app.UseCors(static x => x
+    .AllowAnyHeader()
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+);
 
 using (var scope = app.Services.CreateScope())
 {

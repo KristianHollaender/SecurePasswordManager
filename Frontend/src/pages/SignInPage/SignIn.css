@@ -12,7 +12,7 @@
 }
 
 .avatar {
-    margin: 0px;
+    margin: 0;
 }
 
 .formBox {
@@ -20,10 +20,8 @@
 }
 
 .logoImg {
-    padding-top: 20px;
-    width: 40%;
-    height: auto;
-    padding-bottom: 95px;
+    width: 200px;
+    height: 200px;
 }
 
 .errorMessageGrid {
@@ -36,5 +34,6 @@
 }
 
 .copyrightBox {
+    padding-top: 30px;
     padding-bottom: 20px;
 }

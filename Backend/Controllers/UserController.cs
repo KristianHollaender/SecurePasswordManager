@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
 public class UserController(UserManager<User> userManager) : ControllerBase
 {
     [Authorize(Roles = "Admin")]
@@ -27,7 +27,7 @@ public class UserController(UserManager<User> userManager) : ControllerBase
     
     [Authorize(Roles = "Admin")]
     [HttpGet]
-    [Route("/{userId}")]
+    [Route("{userId}")]
     public async Task<IActionResult> GetUserById([FromRoute] string userId)
     {
         try

@@ -17,11 +17,11 @@ import {Alert, CircularProgress, Snackbar} from "@mui/material";
 import {defaultTheme} from "../../theme/theme.ts";
 import "./SignUp.css";
 import {Copyright} from "../../components/copyright.tsx";
-
+import {UserService} from "../../services/UserService.ts";
 
 export default function SignUp() {
-  //const navigate = useNavigate();
-
+  const userService =  new UserService();
+  const [email, setEmail] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -40,27 +40,11 @@ export default function SignUp() {
     try {
       setLoading(true);
 
-      const formData = new FormData(event.currentTarget);
-      const { firstName, lastName, email, username, password, passwordRepeat } =
-          Object.fromEntries(formData);
 
-      if (!firstName || !lastName || !email || !username) {
-        throw new Error("Please fill out all fields");
-      } else if (!password) {
-        throw new Error("Please insert a password");
-      } else if (password !== passwordRepeat) {
-        throw new Error("Passwords do not match, please try again");
-      } else if (!isChecked) {
-        throw new Error("Please agree to the terms and conditions to continue");
-      }
-
-      /*await userService.register({
-        firstName: firstName as string,
-        lastName: lastName as string,
-        email: email as string,
-        username: username as string,
-        password: password as string,
-      });*/
+      await userService.register({
+        email: email,
+        password: passwordValue,
+      });
 
       setTimeout(() => {
         setOpenSnackbar(true);
@@ -76,9 +60,8 @@ export default function SignUp() {
 
   return (
       <ThemeProvider theme={defaultTheme}>
-        <Container style={{width: "100%", height: "100%", flex: 1}}>
         <Container style={{ display: "flex", justifyContent: "center", alignSelf: "center" }}>
-          <img src={"../../assets/logo.png"} alt={"description"} className={"logoImg"} />
+          <img src={"../../logo.png"} alt={"description"} className={"logoImg"} />
         </Container>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
@@ -96,15 +79,16 @@ export default function SignUp() {
                 sx={{ marginTop: 1.5 }}
             >
               <Grid container spacing={3} >
-
                 <Grid item xs={12}>
                   <TextField
                       required
                       fullWidth
-                      id="username"
-                      label="Username"
-                      name="username"
-                      autoComplete="username"
+                      id="email"
+                      label="Email Address"
+                      name="email"
+                      autoComplete="email"
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -153,16 +137,6 @@ export default function SignUp() {
                       }
                       label={"I agree to the"}
                   />
-                  <Link
-                      marginLeft={-1.5}
-                      marginTop={1}
-                      href={
-                        "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
-                      }
-                      target="_blank"
-                  >
-                    Terms and Conditions
-                  </Link>
                   {loading && (
                       <CircularProgress size={32} className="circularProgress" />
                   )}
@@ -175,7 +149,7 @@ export default function SignUp() {
               </Grid>
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Link href="/Login" variant="body2">
+                  <Link href="/sign-in" variant="body2">
                     Already have an account? Sign in
                   </Link>
                 </Grid>
@@ -195,7 +169,6 @@ export default function SignUp() {
               }}
               message="You have been signed up and will be redirected to login"
           />
-        </Container>
         </Container>
       </ThemeProvider>
   );

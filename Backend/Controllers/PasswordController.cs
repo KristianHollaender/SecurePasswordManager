@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
 public class PasswordController(DatabaseContext context) : ControllerBase
 {
     [Authorize(Roles = "User")]
     [HttpGet]
-    [Route("/{userId}")]
+    [Route("{userId}")]
     public async Task<IActionResult> GetPasswords([FromRoute] string userId)
     {
         try
@@ -44,7 +44,7 @@ public class PasswordController(DatabaseContext context) : ControllerBase
 
     [Authorize(Roles = "User")]
     [HttpDelete]
-    [Route("/{userId}")]
+    [Route("{passwordId}/{userId}")]
     public async Task<IActionResult> DeletePassword([FromRoute] string passwordId, [FromRoute] string userId)
     {
         try

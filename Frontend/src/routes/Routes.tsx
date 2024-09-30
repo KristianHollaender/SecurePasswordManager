@@ -11,8 +11,8 @@ const RoutesComponent: React.FunctionComponent = () => {
       <Routes>
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<SignIn />} />
-        <Route path="sign-in" element={<SignIn />} />
-        <Route path="sign-up" element={<SignUp />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<SignUp />} />
         {/* Use AuthGuard to protect the 'home' route */}
         <Route
             path="home"

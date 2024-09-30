@@ -17,9 +17,12 @@ import {defaultTheme} from "../../theme/theme.ts";
 import {Alert, CircularProgress, Snackbar} from "@mui/material";
 import "./SignIn.css";
 import {Copyright} from "../../components/copyright.tsx";
-
+import {UserService} from "../../services/UserService.ts";
+import {useNavigate} from "react-router-dom";
 
 export const SignIn: React.FunctionComponent = () => {
+  const navigate = useNavigate();
+  const userService = new UserService();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -33,16 +36,36 @@ export const SignIn: React.FunctionComponent = () => {
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    setErrorMessage("errorMessage")
-    setLoading(true)
-    // TODO
-    return event;
+    event.preventDefault();
+
+    try {
+      setLoading(true);
+
+      setOpenSnackbar(true);
+      setLoading(false);
+
+      await userService.login({
+        email: email,
+        password: password,
+      });
+
+      setTimeout(() => {
+        setOpenSnackbar(true);
+        setLoading(false);
+        navigate("/home")
+      }, 2000);
+    } catch (error) {
+      setLoading(false);
+      // @ts-expect-error to expect error
+      setErrorMessage(error.message);
+      console.error(error);
+    }
   };
 
   return (
       <ThemeProvider theme={defaultTheme}>
         <Container style={{ display: "flex", justifyContent: "center" }}>
-          <img src={"../Logo.png"} alt={"description"} className={"logoImg"} />
+          <img src={"../../logo.png"} alt={"description"} className={"logoImg"} />
         </Container>
         <Container
             component="main"
@@ -59,7 +82,6 @@ export const SignIn: React.FunctionComponent = () => {
             <Box
                 component="form"
                 className="formBox"
-                onSubmit={handleSubmit}
                 noValidate
             >
               <TextField
@@ -116,17 +138,13 @@ export const SignIn: React.FunctionComponent = () => {
                     variant="contained"
                     className="submitButton"
                     sx={{ backgroundColor: "primary.main" }}
+                    onClick={handleSubmit}
                 >
                   Sign In
                 </Button>
               </Grid>
 
-              <Grid container>
-                <Grid item xs>
-                  <Link href={"/create-new-password"} variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
+              <Grid container justifyContent="flex-end">
                 <Grid item>
                   <Link href={"/sign-up"} variant="body2">
                     Don't have an account? Sign Up
@@ -142,7 +160,6 @@ export const SignIn: React.FunctionComponent = () => {
               open={openSnackbar}
               autoHideDuration={3500}
               onClose={() => {
-                // TODO navigation
                 setOpenSnackbar(false);
               }}
               message="You have been remembered, and will now be signed in"
