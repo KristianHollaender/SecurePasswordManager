@@ -66,13 +66,14 @@ export const SignIn: React.FunctionComponent = () => {
 
   return (
       <ThemeProvider theme={defaultTheme}>
-        <Container style={{ display: "flex", justifyContent: "center" }}>
-          <img src={"../../logo.png"} alt={"description"} className={"logoImg"} />
-        </Container>
+
         <Container
             component="main"
             maxWidth="xs"
         >
+          <Container style={{ display: "flex", justifyContent: "center" }}>
+            <img src={"../../logo.png"} alt={"description"} className={"logoImg"} />
+          </Container>
           <CssBaseline />
           <Box className={"containerBox"}>
             <Avatar className="avatar" sx={{ backgroundColor: "primary.main" }}>
@@ -123,6 +124,7 @@ export const SignIn: React.FunctionComponent = () => {
                         color="primary"
                         checked={rememberMe}
                         onChange={handleCheckboxChange}
+                        style={{justifyContent: "flex-start"}}
                     />
                   }
                   label="Remember me"

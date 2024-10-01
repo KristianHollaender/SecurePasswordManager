@@ -60,10 +60,11 @@ export default function SignUp() {
 
   return (
       <ThemeProvider theme={defaultTheme}>
-        <Container style={{ display: "flex", justifyContent: "center", alignSelf: "center" }}>
-          <img src={"../../logo.png"} alt={"description"} className={"logoImg"} />
-        </Container>
+
         <Container component="main" maxWidth="xs">
+          <Container style={{ display: "flex", justifyContent: "center", alignSelf: "center"}}>
+            <img src={"../../logo.png"} alt={"description"} className={"logoImg"} />
+          </Container>
           <CssBaseline />
           <Box className="containerBox">
             <Avatar className="avatar" sx={{ backgroundColor: "primary.main" }}>
@@ -137,6 +138,16 @@ export default function SignUp() {
                       }
                       label={"I agree to the"}
                   />
+                  <Link
+                      marginLeft={-1.5}
+                      marginTop={1}
+                      href={
+                        "https://generator.lorem-ipsum.info/terms-and-conditions"
+                      }
+                      target="_blank"
+                  >
+                    Terms and Conditions
+                  </Link>
                   {loading && (
                       <CircularProgress size={32} className="circularProgress" />
                   )}

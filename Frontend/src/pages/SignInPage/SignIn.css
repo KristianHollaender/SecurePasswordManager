@@ -1,8 +1,7 @@
 #root {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
+    align-content: center;
 }
 
 .containerBox {
@@ -15,13 +14,10 @@
     margin: 0;
 }
 
-.formBox {
-    margin-top: 5px;
-}
-
 .logoImg {
-    width: 200px;
-    height: 200px;
+    width: 80%;
+    height: 80%;
+    padding-bottom: 20px;
 }
 
 .errorMessageGrid {
@@ -34,6 +30,5 @@
 }
 
 .copyrightBox {
-    padding-top: 30px;
     padding-bottom: 20px;
 }
