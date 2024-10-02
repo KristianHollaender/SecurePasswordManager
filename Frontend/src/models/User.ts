@@ -1,5 +1,6 @@
 export interface User {
+    salt: string | null;
     id: string;
-    username: string;
+    userName: string;
     email: string;
 }

@@ -1,18 +1,31 @@
 import * as React from "react";
 import {useAtom} from "jotai";
-import {TokenAtom} from "../../atoms/TokenAtom.tsx";
 import "./Home.css";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {CryptoService} from "../../services/CryptoService.ts";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import {IconButton, Tooltip} from "@mui/material";
 import {DerivedAtom} from "../../atoms/DerivedKeyAtom.tsx";
+import {UserService} from "../../services/UserService.ts";
+import {TokenAtom} from "../../atoms/TokenAtom.tsx";
+import {UserAtom} from "../../atoms/UserAtom.tsx";
 
 export const Home: React.FunctionComponent = () => {
     const cryptoService = new CryptoService();
-    //const [token, setToken] = useAtom(TokenAtom);
+    const userService = new UserService();
+    const [token, setToken] = useAtom(TokenAtom);
+    const [user, setUser] = useAtom(UserAtom);
     const [derivedKey, setDerivedKey] = useAtom(DerivedAtom);
     const [masterPassword, setMasterPassword] = useState<string>("");
+
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            setUser(await userService.getCurrentUserInfo(token));
+        };
+
+        fetchUserInfo();
+        console.log(user)
+    },[token]);
 
     async function generateDerivedKey() {
         if (masterPassword) {
@@ -27,7 +40,7 @@ export const Home: React.FunctionComponent = () => {
             console.log("Key: ", cryptoKey)
 
             const decryptPassword = await cryptoService.decryptPassword(cryptoKey, ciphertext, iv);
-            console.log("DecryptPassword: ", decryptPassword)
+            console.log("DecryptPassword: ", decryptPassword);
         }
     }
 

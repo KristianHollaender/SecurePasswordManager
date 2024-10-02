@@ -1,5 +1,7 @@
+using AutoMapper;
 using Backend;
 using Backend.Core;
+using Backend.Core.Dtos;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +21,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddAuthorization();
+
+var mapper = new MapperConfiguration(options =>
+{
+    // Entity to DTO
+    // User
+    options.CreateMap<User, GetUserDto>();
+
+}).CreateMapper();
+
+builder.Services.AddSingleton(mapper);
 
 builder.Services.AddIdentityApiEndpoints<User>(options =>
     {

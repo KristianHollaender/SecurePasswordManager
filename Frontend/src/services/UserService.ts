@@ -25,4 +25,18 @@ export class UserService {
             throw error;
         }
     }
+
+    getCurrentUserInfo = async (token: string) => {
+        try {
+            const response = await this.api.get("api/user/me", {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
 }
