@@ -2,6 +2,8 @@
 using AutoMapper;
 using Backend.Core;
 using Backend.Core.Dtos;
+using Backend.Core.Helper;
+using Backend.Core.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,15 +13,16 @@ namespace Backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UserController(UserManager<User> userManager, IMapper mapper) : ControllerBase
+public class UserController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper) : ControllerBase
 {
+    private readonly Helper _helper = new(userManager, roleManager);
     [Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<IActionResult> GetUsers()
     {
         try
         {
-            return Ok(mapper.Map<GetUserDto>(await userManager.Users.ToListAsync()));
+            return Ok(mapper.Map<IEnumerable<GetUserDto>>(await userManager.Users.ToListAsync()));
         }
         catch (Exception e)
         {
@@ -27,7 +30,7 @@ public class UserController(UserManager<User> userManager, IMapper mapper) : Con
             throw;
         }
     }
-    
+
     [Authorize(Roles = "Admin")]
     [HttpGet]
     [Route("{userId}")]
@@ -43,6 +46,32 @@ public class UserController(UserManager<User> userManager, IMapper mapper) : Con
             throw;
         }
     }
+    
+    [HttpPost]
+    [Route("/sign-up")]
+    public async Task<IActionResult> SignUp([FromBody] SignUpDto signUpDto)
+    {
+        try
+        {
+            var existingUser = await userManager.FindByEmailAsync(signUpDto.Email);
+            
+            if (existingUser != null)
+            {
+                return BadRequest("Email already exists");
+            }
+
+            var user = await _helper.CreateUser(signUpDto);
+            await _helper.AddUserToRole(user, Roles.User);
+            
+            return Created("Successfully created",user);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
 
     [Authorize]
     [HttpGet]
