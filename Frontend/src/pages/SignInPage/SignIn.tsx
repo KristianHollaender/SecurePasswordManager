@@ -24,7 +24,7 @@ import {useAtom} from "jotai";
 
 export const SignIn: React.FunctionComponent = () => {
   const navigate = useNavigate();
-  const [token, setToken] = useAtom(TokenAtom);
+  const [, setToken] = useAtom(TokenAtom);
   const userService = new UserService();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

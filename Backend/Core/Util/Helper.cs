@@ -13,7 +13,8 @@ public class Helper(UserManager<User> userManager, RoleManager<IdentityRole> rol
             Email = signUpDto.Email,
             UserName = signUpDto.Email,
             EmailConfirmed = true,
-            LockoutEnabled = false
+            LockoutEnabled = false,
+            Salt = signUpDto.Salt,
         };
         var result = await userManager.CreateAsync(user, signUpDto.Password);
 

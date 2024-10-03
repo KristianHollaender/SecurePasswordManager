@@ -18,20 +18,26 @@ import {defaultTheme} from "../../theme/theme.ts";
 import "./SignUp.css";
 import {Copyright} from "../../components/copyright.tsx";
 import {UserService} from "../../services/UserService.ts";
+import {useAtom} from "jotai/index";
+import {DerivedAtom} from "../../atoms/DerivedKeyAtom.tsx";
+import {CryptoService} from "../../services/CryptoService.ts";
 
 export default function SignUp() {
   const userService =  new UserService();
   const [email, setEmail] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [, setDerivedKey] = useAtom(DerivedAtom);
+  const [masterPassword, setMasterPassword] = useState<string>("");
+  const cryptoService = new CryptoService();
+
 
   const handlePasswordValueChange = (
       event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    setPasswordValue(event.target.value);
+    setMasterPassword(event.target.value);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -40,11 +46,29 @@ export default function SignUp() {
     try {
       setLoading(true);
 
+      if (masterPassword){
+        const salt = cryptoService.generateSalt();
 
-      await userService.register({
-        email: email,
-        password: passwordValue,
-      });
+        await userService.signup({
+          email: email,
+          password: masterPassword,
+          salt: salt
+        });
+
+        //This is just to check if the asymmetric encryption works
+        const derivedKey = await cryptoService.deriveKey(masterPassword, salt);
+        console.log("DerivedKey: ",derivedKey)
+        setDerivedKey(derivedKey);
+
+        const cryptoKey = await cryptoService.importDerivedKey(derivedKey);
+        const {ciphertext, iv} = await cryptoService.encryptPassword(cryptoKey, "Andy");
+        console.log(`Ciphertext: ${ciphertext}, IV: ${iv}`);
+        console.log("Key: ", cryptoKey)
+
+        const decryptPassword = await cryptoService.decryptPassword(cryptoKey, ciphertext, iv);
+        console.log("DecryptPassword: ", decryptPassword);
+      }
+
 
       setTimeout(() => {
         setOpenSnackbar(true);
@@ -101,11 +125,11 @@ export default function SignUp() {
                       type="password"
                       id="password"
                       autoComplete="new-password"
-                      value={passwordValue}
+                      value={masterPassword}
                       onChange={handlePasswordValueChange}
                   />
                 </Grid>
-                {passwordValue && (
+                {masterPassword && (
                     <Grid item xs={12}>
                       <TextField
                           required

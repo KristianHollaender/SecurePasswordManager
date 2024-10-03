@@ -1,14 +1,15 @@
 import axios from "axios";
 import {SignUpDTO} from "../models/dtos/SignUpDTO.ts";
+import {SignInDTO} from "../models/dtos/SignInDTO.ts";
 
 export class UserService {
     api = axios.create({
         baseURL: `http://localhost:9092/`,
     });
 
-    register = async (dto: SignUpDTO) => {
+    signup = async (dto: SignUpDTO) => {
         try {
-            const response = await this.api.post("register", dto);
+            const response = await this.api.post("api/user/sign-up", dto);
             return response.data;
         } catch (error) {
             console.error(error);
@@ -16,7 +17,7 @@ export class UserService {
         }
     };
 
-    login = async (dto: SignUpDTO) => {
+    login = async (dto: SignInDTO) => {
         try {
             const response = await this.api.post("login", dto);
             return response.data;

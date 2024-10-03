@@ -48,7 +48,7 @@ public class UserController(UserManager<User> userManager, RoleManager<IdentityR
     }
     
     [HttpPost]
-    [Route("/sign-up")]
+    [Route("sign-up")]
     public async Task<IActionResult> SignUp([FromBody] SignUpDto signUpDto)
     {
         try

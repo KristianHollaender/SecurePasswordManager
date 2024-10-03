@@ -1,67 +1,36 @@
 import * as React from "react";
 import {useAtom} from "jotai";
 import "./Home.css";
-import {useEffect, useState} from "react";
-import {CryptoService} from "../../services/CryptoService.ts";
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import {IconButton, Tooltip} from "@mui/material";
-import {DerivedAtom} from "../../atoms/DerivedKeyAtom.tsx";
+import {useEffect} from "react";
 import {UserService} from "../../services/UserService.ts";
 import {TokenAtom} from "../../atoms/TokenAtom.tsx";
 import {UserAtom} from "../../atoms/UserAtom.tsx";
 
 export const Home: React.FunctionComponent = () => {
-    const cryptoService = new CryptoService();
     const userService = new UserService();
-    const [token, setToken] = useAtom(TokenAtom);
-    const [user, setUser] = useAtom(UserAtom);
-    const [derivedKey, setDerivedKey] = useAtom(DerivedAtom);
-    const [masterPassword, setMasterPassword] = useState<string>("");
+    const [token] = useAtom(TokenAtom);
+    const [, setUser] = useAtom(UserAtom);
 
     useEffect(() => {
         const fetchUserInfo = async () => {
-            setUser(await userService.getCurrentUserInfo(token));
+            const me = await userService.getCurrentUserInfo(token);
+            setUser(me);
+            console.log(me)
+
+
         };
 
-        fetchUserInfo();
-        console.log(user)
+        fetchUserInfo()
     },[token]);
 
-    async function generateDerivedKey() {
-        if (masterPassword) {
-            const salt = cryptoService.generateSalt();
-            const derivedKey = await cryptoService.deriveKey(masterPassword, salt);
-            console.log("DerivedKey: ",derivedKey)
-            setDerivedKey(derivedKey);
-
-            const cryptoKey = await cryptoService.importDerivedKey(derivedKey);
-            const {ciphertext, iv} = await cryptoService.encryptPassword(cryptoKey, "Andy");
-            console.log(`Ciphertext: ${ciphertext}, IV: ${iv}`);
-            console.log("Key: ", cryptoKey)
-
-            const decryptPassword = await cryptoService.decryptPassword(cryptoKey, ciphertext, iv);
-            console.log("DecryptPassword: ", decryptPassword);
-        }
+    const getDerivedKey = (masterPassword: string, salt: string) => {
+        //Find a way to get the masterPassword
+        //Maybe change the login view to login with only an email and after that on a new page
+        //Login with the masterPassword which is used to get the derivedKey with the salt
+        //Just like bitwarden
     }
 
-    return (
-        <div className={"content"}>
-            <h3>Master password</h3>
-            <input value={masterPassword} onChange={e => setMasterPassword(e.target.value)}/>
-            <button onClick={generateDerivedKey}>Generate masterpassword</button>
-            <div style={{display: "flex", alignItems: "center", justifyContent: "space-around"}}>
-                <h3>Key</h3>
-                <Tooltip title="Copy key">
-                    <IconButton onClick={()=> {
-                        navigator.clipboard.writeText("as")
-                    }}>
-                        <ContentCopyIcon className={"copy-icon"}/>
-                    </IconButton>
-                </Tooltip>
-            </div>
-            {/*<textarea value={derivedKey} disabled={true}/>*/}
-            {/*<h3>Encrypt</h3>*/}
-            {/*<input disabled={!derivedKey} value={} onChange={e => setMasterPassword(e.target.value)}/>*/}
+    return (<div>
 
         </div>
     );

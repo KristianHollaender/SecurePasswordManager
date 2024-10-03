@@ -1,15 +1,29 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import argon2, {ArgonType} from "argon2-browser/dist/argon2-bundled.min.js";
 
 export class CryptoService {
 
-    // Generate a random salt
-    generateSalt(length: number = 16): Uint8Array {
+    // Generate a random salt and return it as a Base64 string
+    generateSalt(length: number = 16): string {
         const salt = new Uint8Array(length);
         window.crypto.getRandomValues(salt);
-        return salt;
+        return this.uint8ArrayToBase64(salt);
     }
 
-    async deriveKey(masterPassword: string, salt: Uint8Array): Promise<Uint8Array> {
+    // Helper function to convert Uint8Array to Base64
+    uint8ArrayToBase64(arr: Uint8Array): string {
+        return btoa(String.fromCharCode(...Array.from(arr)));
+    }
+
+    // Helper function to decode Base64 string back to Uint8Array
+    base64ToUint8Array(base64: string): Uint8Array {
+        const binaryString = atob(base64);
+        return new Uint8Array([...binaryString].map(char => char.charCodeAt(0)));
+    }
+
+    async deriveKey(masterPassword: string, saltBase64: string): Promise<Uint8Array> {
+        const salt = this.base64ToUint8Array(saltBase64);
         const key = await argon2.hash({
             pass: masterPassword,
             salt: salt,  // Use a secure, unique salt
