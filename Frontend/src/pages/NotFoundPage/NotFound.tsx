@@ -9,7 +9,7 @@ export const NotFound: React.FunctionComponent = () => {
   const navigate = useNavigate();
 
   const handleBackHome = () => {
-    navigate("");
+    navigate("/home");
   };
 
   return (

@@ -71,7 +71,7 @@ export const SignIn: React.FunctionComponent = () => {
             component="main"
             maxWidth="xs"
         >
-          <Container style={{ display: "flex", justifyContent: "center" }}>
+          <Container style={{ display: "flex", justifyContent: "center"}}>
             <img src={"../../logo.png"} alt={"description"} className={"logoImg"} />
           </Container>
           <CssBaseline />
