@@ -3,5 +3,7 @@ export interface Password {
     EncryptedName: string;
     EncryptedPassword: string;
     CreatedAt: Date;
+    UpdatedAt: Date;
+    Note: string;
     UserId: string;
 }

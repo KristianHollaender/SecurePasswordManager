@@ -20,10 +20,6 @@
     background-color: #343e42;
 }
 
-.drawer {
-    width: 280px;
-    flex-shrink: 0;
-}
 
 .circle-icon{
     padding-left: 45px;

@@ -9,6 +9,8 @@ import {defaultTheme} from "../../theme/theme.ts";
 import {ThemeProvider} from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import {SideBar} from "../../components/SideBar/SideBar.tsx";
+import Box from "@mui/material/Box";
+import {Passwords} from "../../components/Passwords/Passwords.tsx";
 
 export const Home: React.FunctionComponent = () => {
   const userService = new UserService();
@@ -37,10 +39,15 @@ export const Home: React.FunctionComponent = () => {
   return (
       <ThemeProvider theme={defaultTheme}>
         <CssBaseline/>
-        <SideBar/>
-        <div style={{alignContent: "center", justifyContent: "center", display: "flex", flexDirection: "column"}}>
-          Hello World
-        </div>
+        <Box sx={{display: "flex", minHeight: "100vh", minWidth: "80vw"}}>
+          <Box sx={{display: "flex"}}>
+            <SideBar/>
+          </Box>
+          <Box sx={{paddingLeft: 18, paddingTop: 2.5}}>
+            <Passwords/>
+          </Box>
+
+        </Box>
       </ThemeProvider>
   );
 }

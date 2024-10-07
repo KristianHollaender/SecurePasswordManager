@@ -56,7 +56,7 @@ export const SideBar: React.FunctionComponent = () => {
                 width: "100%",
                 height: "100%",
                 objectFit: "contain",
-                padding: 15,
+                padding: 15
               }}
           />
           </Box>
@@ -66,13 +66,13 @@ export const SideBar: React.FunctionComponent = () => {
               <ListItemIcon>
                 <AccountCircleIcon sx={{color: "primary.main"}}/>
               </ListItemIcon>
-              <ListItemText primary="Profile" sx={{color: "white"}}/>
+              <ListItemText primary="Vaults" sx={{color: "white"}}/>
             </ListItemButton>
             <ListItemButton className={"listItem"} onClick={() => console.log("hey")}>
               <ListItemIcon>
                 <AddCircleOutlineIcon sx={{ color: "primary.main" }} />
               </ListItemIcon>
-              <ListItemText primary="Add Item" sx={{ color: "white" }} />
+              <ListItemText primary="About" sx={{ color: "white" }} />
             </ListItemButton>
 
 
