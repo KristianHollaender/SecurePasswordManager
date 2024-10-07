@@ -28,6 +28,10 @@ var mapper = new MapperConfiguration(options =>
     // Entity to DTO
     // User
     options.CreateMap<User, GetUserDto>();
+    
+    // DTO to Entity
+    options.CreateMap<CreatePasswordDto, Password>();
+
 
 }).CreateMapper();
 

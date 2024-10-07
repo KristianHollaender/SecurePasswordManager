@@ -1,4 +1,6 @@
-﻿using Backend.Core;
+﻿using AutoMapper;
+using Backend.Core;
+using Backend.Core.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +9,7 @@ namespace Backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PasswordController(DatabaseContext context) : ControllerBase
+public class PasswordController(DatabaseContext context, IMapper mapper) : ControllerBase
 {
     [Authorize(Roles = "User")]
     [HttpGet]
@@ -27,11 +29,11 @@ public class PasswordController(DatabaseContext context) : ControllerBase
 
     [Authorize(Roles = "User")]
     [HttpPost]
-    public async Task<IActionResult> CreatePassword([FromBody] Password password)
+    public async Task<IActionResult> CreatePassword([FromBody] CreatePasswordDto password)
     {
         try
         {
-            await context.Passwords.AddAsync(password);
+            await context.Passwords.AddAsync(mapper.Map<Password>(password));
             await context.SaveChangesAsync();
             return Created();
         }
