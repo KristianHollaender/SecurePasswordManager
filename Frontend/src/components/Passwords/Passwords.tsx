@@ -147,7 +147,7 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords, re
           {passwords && passwords.length > 0 && passwords.map((password, index) => (
               <Box key={password.id || index}>
                 <Box key={password.id || index}>
-                  <Card className={"standardCard"} sx={{width: "280px", height: "340px", borderRadius: 4}}>
+                  <Card className={"standardCard"} sx={{width: "280px", height: "340px", borderRadius: 4, display: "flex" }}>
                     <CardContent>
                       <CardHeader
                           title={decryptedNames[index] || "Loading..."}
@@ -158,50 +158,54 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords, re
                             textOverflow: "ellipsis",
                             width: "280px",
                           }}
-                      /> <CardActions>
-                      <Box sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        width: "100%",
-                        height: "100%"
-                      }}>
-                        <Box sx={{display: "flex", alignItems: "center", width: "100%"}}>
-                          <TextField
-                              disabled={true}
-                              label={"Password"}
-                              type={showPassword[password.id] ? "text" : "password"}
-                              value={decryptedPasswords[index] || "Loading..."}
-                              variant="standard"
-                              InputProps={{disableUnderline: true}}
-                              sx={{border: "none", width: "90%"}}
-                          />
-                          <IconButton onClick={() => handleTogglePassword(password.id)}>
-                            {showPassword[password.id] ? <VisibilityOff/> : <Visibility/>}
-                          </IconButton>
-                        </Box>
-
-                        <Typography variant={"caption"}
-                                    sx={{marginTop: 2, color: "rgb(149,149,149)"}}>Note</Typography>
-
-                        <Box>
-                          <Typography>
-                            {password.note}
-                          </Typography>
-                        </Box>
+                      />
+                      <Container>
                         <Box sx={{
                           display: "flex",
-                          justifyContent: "flex-end",
-                          alignItems: "flex-end",
-                          verticalAlign: "flex-end"
+                          flexDirection: "column",
+                          width: "100%",
+                          height: "100%",
+                        }}>
+                          <Box sx={{display: "flex", alignItems: "center", width: "100%"}}>
+                            <TextField
+                                disabled={true}
+                                label={"Password"}
+                                type={showPassword[password.id] ? "text" : "password"}
+                                value={decryptedPasswords[index] || "Loading..."}
+                                variant="standard"
+                                InputProps={{disableUnderline: true}}
+                                sx={{border: "none", width: "90%"}}
+                            />
+                            <IconButton onClick={() => handleTogglePassword(password.id)}>
+                              {showPassword[password.id] ? <VisibilityOff/> : <Visibility/>}
+                            </IconButton>
+                          </Box>
+
+                          <Typography variant={"caption"}
+                                      sx={{marginTop: 2, color: "rgb(149,149,149)"}}>Note</Typography>
+
+                          <Box>
+                            <Typography>
+                              {password.note}
+                            </Typography>
+                          </Box>
+                        </Box>
+                      </Container>
+
+                      <Container sx={{display: "flex",
+                        justifyContent: "flex-end",
+                        alignItems: "flex-end",
+                        verticalAlign: "flex-end",
+                        width: "100%",
+                        height: "40%",
+                      }}>
+                        <Box sx={{
                         }}>
                           <Typography variant="caption" sx={{color: "rgb(149,149,149)"}}>
                             {formatDate(password.createdAt)}
                           </Typography>
                         </Box>
-                      </Box>
-
-                    </CardActions>
-
+                      </Container>
                     </CardContent>
                   </Card>
                 </Box>
