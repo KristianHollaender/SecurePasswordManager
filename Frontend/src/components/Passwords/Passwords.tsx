@@ -62,7 +62,7 @@ export const Passwords: React.FunctionComponent = () => {
           justifyContent: "space-between"
         }}>
           <Typography variant="h3" sx={{paddingBottom: 1.75, alignSelf: "flex-start", position: "absolute"}}>
-            All passwords
+            Passwords
           </Typography>
         </Container>
         <Container
@@ -133,7 +133,10 @@ export const Passwords: React.FunctionComponent = () => {
                             <Typography>
                               {password.Note}
                             </Typography>
-                            <Box sx={{flexGrow: 1, height: "100%"}}/>
+                            {/*<Box sx={{flexGrow: 1, height: "100%"}}/>*/}
+                            <Typography sx={{ color: "red", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" , verticalAlign: "flex-end"}}>
+                              Fix this
+                            </Typography>
                             <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" , verticalAlign: "flex-end"}}>
                               <Typography variant="caption" sx={{color: "rgb(149,149,149)"}}>
                                 {password.CreatedAt.toDateString()}

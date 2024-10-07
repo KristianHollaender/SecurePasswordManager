@@ -29,7 +29,7 @@ export const SideBar: React.FunctionComponent = () => {
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/sign-up");
+    navigate("/sign-in");
   };
 
   return (

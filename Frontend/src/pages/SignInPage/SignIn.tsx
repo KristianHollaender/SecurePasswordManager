@@ -21,10 +21,12 @@ import {UserService} from "../../services/UserService.ts";
 import {useNavigate} from "react-router-dom";
 import {TokenAtom} from "../../atoms/TokenAtom.tsx";
 import {useAtom} from "jotai";
+import {MasterPasswordAtom} from "../../atoms/MasterPasswordAtom.tsx";
 
 export const SignIn: React.FunctionComponent = () => {
   const navigate = useNavigate();
   const [, setToken] = useAtom(TokenAtom);
+  const [, setMasterPassword] = useAtom(MasterPasswordAtom);
   const userService = new UserService();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,6 +46,7 @@ export const SignIn: React.FunctionComponent = () => {
     try {
       setLoading(true);
 
+      setMasterPassword(password);
       await userService.login({
         email: email,
         password: password,

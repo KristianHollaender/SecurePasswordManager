@@ -11,19 +11,23 @@ import CssBaseline from "@mui/material/CssBaseline";
 import {SideBar} from "../../components/SideBar/SideBar.tsx";
 import Box from "@mui/material/Box";
 import {Passwords} from "../../components/Passwords/Passwords.tsx";
+import {MasterPasswordAtom} from "../../atoms/MasterPasswordAtom.tsx";
+import {CryptoService} from "../../services/CryptoService.ts";
 
 export const Home: React.FunctionComponent = () => {
   const userService = new UserService();
+  const cryptoService = new CryptoService();
   const [token] = useAtom(TokenAtom);
   const [, setUser] = useAtom(UserAtom);
+  const [masterPassword] = useAtom(MasterPasswordAtom);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       const me = await userService.getCurrentUserInfo(token);
       setUser(me);
+      const derivedKey = await cryptoService.deriveKey(masterPassword, me.salt);
       console.log(me)
-
-
+      console.log(derivedKey)
     };
 
     fetchUserInfo()
