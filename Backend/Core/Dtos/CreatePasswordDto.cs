@@ -1,12 +1,11 @@
-﻿namespace Backend.Core;
-public class Password
+﻿namespace Backend.Core.Dtos;
+
+public class CreatePasswordDto
 {
-    public Guid Id { get; set; }
     public string EncryptedName { get; set; }
     public string EncryptedPassword { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }
     public string? Note { get; set; }
-    public User? User { get; set; }
     public string UserId { get; set; }
 }
