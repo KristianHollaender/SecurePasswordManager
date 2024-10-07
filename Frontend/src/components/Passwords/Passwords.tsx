@@ -16,9 +16,10 @@ import {DerivedAtom} from "../../atoms/DerivedKeyAtom.tsx";
 
 interface passwordProps {
   passwords: Password[];
+  refreshPasswords: () => Promise<void>;
 }
 
-export const Passwords: React.FunctionComponent<passwordProps> = ({passwords}) => {
+export const Passwords: React.FunctionComponent<passwordProps> = ({passwords, refreshPasswords}) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [showPassword, setShowPassword] = useState<{ [key: string]: boolean }>({});
   const cryptoService = new CryptoService();
@@ -206,7 +207,7 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords}) =
                 </Box>
               </Box>
           ))}
-          <AddPasswordDialog open={isDialogOpen} onClose={handleDialogClose}/>
+          <AddPasswordDialog open={isDialogOpen} onClose={handleDialogClose} onAdd={refreshPasswords}/>
         </Container>
       </Container>
 

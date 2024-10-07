@@ -66,9 +66,8 @@ export const Home: React.FunctionComponent = () => {
             <SideBar/>
           </Box>
           <Box sx={{paddingLeft: 18, paddingTop: 2.5}}>
-            <Passwords passwords={passwords}/>
+            <Passwords passwords={passwords} refreshPasswords={getPasswords} />
           </Box>
-
         </Box>
       </ThemeProvider>
   );

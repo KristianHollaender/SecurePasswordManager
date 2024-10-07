@@ -13,9 +13,10 @@ import {UserAtom} from "../../atoms/UserAtom.tsx";
 interface AddPasswordDialogProps {
   open: boolean,
   onClose: () => void
+  onAdd: () => void
 }
 
-export const AddPasswordDialog: React.FunctionComponent<AddPasswordDialogProps> = ({open, onClose}) => {
+export const AddPasswordDialog: React.FunctionComponent<AddPasswordDialogProps> = ({open, onClose, onAdd}) => {
   const cryptoService = new CryptoService();
   const passwordService = new PasswordService();
   const [token] = useAtom(TokenAtom);
@@ -42,6 +43,7 @@ export const AddPasswordDialog: React.FunctionComponent<AddPasswordDialogProps> 
 
     await passwordService.createPassword(dto, token)
 
+    onAdd();
     onClose();
   }
 
