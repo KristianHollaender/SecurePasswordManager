@@ -22,6 +22,40 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords}) =
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [showPassword, setShowPassword] = useState<{ [key: string]: boolean }>({});
   const cryptoService = new CryptoService();
+  const [decryptedNames, setDecryptedNames] = useState<string[]>([]);
+  const [decryptedPasswords, setDecryptedPasswords] = useState<string[]>([]);
+
+  useEffect(() => {
+    const decryptAllNames = async () => {
+      const decryptedNamesArray = await Promise.all(
+          passwords.map(async (password) => {
+            const decrypted = await decryptText(password.encryptedName);
+            return decrypted || ""; // Return the decrypted name or empty string if decryption fails
+          })
+      );
+      setDecryptedNames(decryptedNamesArray);
+    };
+
+    if (passwords.length > 0) {
+      decryptAllNames();
+    }
+  }, [passwords]);
+
+  useEffect(() => {
+    const decryptAllPasswords = async () => {
+      const decryptedPasswordsArray = await Promise.all(
+          passwords.map(async (password) => {
+            const decrypted = await decryptText(password.encryptedPassword);
+            return decrypted || ""; // Return the decrypted name or empty string if decryption fails
+          })
+      );
+      setDecryptedPasswords(decryptedPasswordsArray);
+    };
+
+    if (passwords.length > 0) {
+      decryptAllPasswords();
+    }
+  }, [passwords]);
 
   const [derivedKey] = useAtom(DerivedAtom);
 
@@ -34,9 +68,11 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords}) =
   };
 
   const handleTogglePassword = (id: string) => {
-    setShowPassword((prev) => ({...prev, [id]: !prev[id]}));
+    setShowPassword((prev) => ({
+      ...prev,
+      [id]: !prev[id], // Toggle between true/false
+    }));
   };
-
 
   const decryptText = async (text: string) => {
     if(!derivedKey) return;
@@ -80,11 +116,12 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords}) =
               <CardContent>
                 <CardActions>
                   <Box sx={{
+                    position: "relative",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
                     width: "100%",
-                    height: "100%"
+                    height: "100%",
                   }}>
                     <Tooltip title={"Add new password"}>
                       <IconButton
@@ -107,18 +144,18 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords}) =
 
           </Box>
           {passwords && passwords.length > 0 && passwords.map((password, index) => (
-              <Box key={password.Id || index}>
-                <Box key={password.Id || index}>
+              <Box key={password.id || index}>
+                <Box key={password.id || index}>
                   <Card className={"standardCard"} sx={{width: "280px", height: "340px", borderRadius: 4}}>
                     <CardContent>
                       <CardHeader
-                          title={decryptText(password.encryptedName)}
+                          title={decryptedNames[index] || "Loading..."}
                           sx={{
                             paddingBottom: 5,
                             wordWrap: "break-word",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
-                            width: "280px"
+                            width: "280px",
                           }}
                       /> <CardActions>
                       <Box sx={{
@@ -131,14 +168,14 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords}) =
                           <TextField
                               disabled={true}
                               label={"Password"}
-                              type={showPassword[password.Id] ? "text" : "password"}
-                              value={password.encryptedPassword}
+                              type={showPassword[password.id] ? "text" : "password"}
+                              value={decryptedPasswords[index] || "Loading..."}
                               variant="standard"
                               InputProps={{disableUnderline: true}}
                               sx={{border: "none", width: "90%"}}
                           />
-                          <IconButton onClick={() => handleTogglePassword(password.Id)}>
-                            {showPassword[password.Id] ? <VisibilityOff/> : <Visibility/>}
+                          <IconButton onClick={() => handleTogglePassword(password.id)}>
+                            {showPassword[password.id] ? <VisibilityOff/> : <Visibility/>}
                           </IconButton>
                         </Box>
 
@@ -149,29 +186,21 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords}) =
                           <Typography>
                             {password.note}
                           </Typography>
-                          {/*<Box sx={{flexGrow: 1, height: "100%"}}/>*/}
-                          <Typography sx={{
-                            color: "red",
-                            display: "flex",
-                            justifyContent: "flex-end",
-                            alignItems: "flex-end",
-                            verticalAlign: "flex-end"
-                          }}>
-                            Fix this
+                        </Box>
+                        <Box sx={{
+                          display: "flex",
+                          justifyContent: "flex-end",
+                          alignItems: "flex-end",
+                          verticalAlign: "flex-end"
+                        }}>
+                          <Typography variant="caption" sx={{color: "rgb(149,149,149)"}}>
+                            {formatDate(password.createdAt)}
                           </Typography>
-                          <Box sx={{
-                            display: "flex",
-                            justifyContent: "flex-end",
-                            alignItems: "flex-end",
-                            verticalAlign: "flex-end"
-                          }}>
-                            <Typography variant="caption" sx={{color: "rgb(149,149,149)"}}>
-                              {formatDate(password.createdAt)}
-                            </Typography>
-                          </Box>
                         </Box>
                       </Box>
+
                     </CardActions>
+
                     </CardContent>
                   </Card>
                 </Box>
