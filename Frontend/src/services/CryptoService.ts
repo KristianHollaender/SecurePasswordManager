@@ -4,6 +4,15 @@ import argon2, {ArgonType} from "argon2-browser/dist/argon2-bundled.min.js";
 
 export class CryptoService {
 
+    // Use a Uint8Array to hardcode the IV (12 bytes / 96 bits is typical for AES-GCM)
+     iv = new Uint8Array([0x05, 0x10, 0x0c, 0xca, 0x1c, 0x4d, 0xd9, 0x7d, 0x5f, 0x92, 0x13, 0x2d]);
+
+// Convert the Uint8Array to a hex string
+     ivHex = Array.from(this.iv).map(b => b.toString(16).padStart(2, '0')).join('');
+
+// Convert the hex string back to Uint8Array
+     ivBytes = Uint8Array.from(this.ivHex.match(/.{1,2}/g)!.map(byte => parseInt(byte, 16)));
+
     // Generate a random salt and return it as a Base64 string
     generateSalt(length: number = 16): string {
         const salt = new Uint8Array(length);
@@ -38,14 +47,13 @@ export class CryptoService {
         return this.hexToUint8Array(key.hashHex)
     }
 
-    async encryptPassword(derivedKey: CryptoKey, plainPassword: string): Promise<{ ciphertext: string, iv: string }> {
-        const iv = window.crypto.getRandomValues(new Uint8Array(12));  // AES-GCM uses a 12-byte IV
+    async encrypt(derivedKey: CryptoKey, plainText: string): Promise<{ ciphertext: string, iv: string }> {
 
-        const encodedPassword = new TextEncoder().encode(plainPassword);  // Convert the plaintext password to Uint8Array
+        const encodedPassword = new TextEncoder().encode(plainText);  // Convert the plaintext password to Uint8Array
         const encrypted = await window.crypto.subtle.encrypt(
             {
                 name: "AES-GCM",
-                iv: iv,   // Initialization vector
+                iv: this.iv,   // Initialization vector
                 tagLength: 128  // Tag length for AES-GCM (16 bytes / 128 bits)
             },
             derivedKey,
@@ -54,19 +62,17 @@ export class CryptoService {
 
         // Convert ArrayBuffers to hex strings for storage or transmission
         const ciphertextHex = Array.from(new Uint8Array(encrypted)).map(b => b.toString(16).padStart(2, '0')).join('');
-        const ivHex = Array.from(iv).map(b => b.toString(16).padStart(2, '0')).join('');
 
-        return { ciphertext: ciphertextHex, iv: ivHex };
+        return { ciphertext: ciphertextHex, iv: this.ivHex };
     }
 
-    async decryptPassword(derivedKey: CryptoKey, ciphertext: string, iv: string): Promise<string> {
+    async decrypt(derivedKey: CryptoKey, ciphertext: string): Promise<string> {
         const ciphertextBytes = Uint8Array.from(ciphertext.match(/.{1,2}/g)!.map(byte => parseInt(byte, 16)));
-        const ivBytes = Uint8Array.from(iv.match(/.{1,2}/g)!.map(byte => parseInt(byte, 16)));
 
         const decrypted = await window.crypto.subtle.decrypt(
             {
                 name: "AES-GCM",
-                iv: ivBytes,
+                iv: this.ivBytes,
                 tagLength: 128  // Tag length for AES-GCM (16 bytes / 128 bits)
             },
             derivedKey,

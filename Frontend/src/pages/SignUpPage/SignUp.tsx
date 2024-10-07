@@ -54,19 +54,6 @@ export default function SignUp() {
           password: masterPassword,
           salt: salt
         });
-
-        //This is just to check if the asymmetric encryption works
-        const derivedKey = await cryptoService.deriveKey(masterPassword, salt);
-        console.log("DerivedKey: ",derivedKey)
-        setDerivedKey(derivedKey);
-
-        const cryptoKey = await cryptoService.importDerivedKey(derivedKey);
-        const {ciphertext, iv} = await cryptoService.encryptPassword(cryptoKey, "Andy");
-        console.log(`Ciphertext: ${ciphertext}, IV: ${iv}`);
-        console.log("Key: ", cryptoKey)
-
-        const decryptPassword = await cryptoService.decryptPassword(cryptoKey, ciphertext, iv);
-        console.log("DecryptPassword: ", decryptPassword);
       }
 
 

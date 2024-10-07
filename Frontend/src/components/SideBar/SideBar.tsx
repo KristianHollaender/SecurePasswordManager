@@ -28,8 +28,9 @@ export const SideBar: React.FunctionComponent = () => {
 
 
   const handleLogout = () => {
-    localStorage.clear();
     navigate("/sign-in");
+    localStorage.clear();
+    location.reload()
   };
 
   return (

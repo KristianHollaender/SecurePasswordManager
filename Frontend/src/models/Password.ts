@@ -1,9 +1,9 @@
 export interface Password {
     Id: string;
-    EncryptedName: string;
-    EncryptedPassword: string;
-    CreatedAt: Date;
-    UpdatedAt: Date;
-    Note: string;
+    encryptedName: string;
+    encryptedPassword: string;
+    createdAt: string;
+    updatedAt: string;
+    note: string;
     UserId: string;
 }
