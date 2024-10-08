@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useState} from "react";
 import {Drawer, List, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LockPersonIcon from '@mui/icons-material/LockPerson';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -12,6 +12,7 @@ import Menu from "@mui/material/Menu";
 import {useNavigate} from "react-router-dom";
 import "./SideBar.css";
 import Box from "@mui/material/Box";
+import {Help, QuestionMark, QuestionMarkOutlined} from "@mui/icons-material";
 
 
 export const SideBar: React.FunctionComponent = () => {
@@ -65,13 +66,13 @@ export const SideBar: React.FunctionComponent = () => {
           <List sx={{flexGrow: 1}}>
             <ListItemButton className={"listItem"} onClick={() => console.log("hey")}>
               <ListItemIcon>
-                <AccountCircleIcon sx={{color: "primary.main"}}/>
+                <LockPersonIcon sx={{color: "primary.main"}}/>
               </ListItemIcon>
-              <ListItemText primary="Vaults" sx={{color: "white"}}/>
+              <ListItemText primary="Passwords" sx={{color: "white"}}/>
             </ListItemButton>
             <ListItemButton className={"listItem"} onClick={() => console.log("hey")}>
               <ListItemIcon>
-                <AddCircleOutlineIcon sx={{ color: "primary.main" }} />
+                <Help sx={{ color: "primary.main" }} />
               </ListItemIcon>
               <ListItemText primary="About" sx={{ color: "white" }} />
             </ListItemButton>

@@ -60,12 +60,13 @@ export const Home: React.FunctionComponent = () => {
 
   return (
       <ThemeProvider theme={defaultTheme}>
+
         <CssBaseline />
         <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
           <Box sx={{ display: "flex", minWidth: "20vw", width: "20vw", flexShrink: 0 }}>
             <SideBar />
           </Box>
-          <Box sx={{ paddingLeft: "18vw", paddingTop: 2.5, flexGrow: 1 }}>
+          <Box sx={{ paddingLeft: "12vw", paddingTop: "3vh", flexGrow: 1 }}>
             <Passwords passwords={passwords} refreshPasswords={getPasswords} />
           </Box>
         </Box>

@@ -13,7 +13,6 @@ import {AddPasswordDialog} from "../AddPasswordDialog/AddPasswordDialog.tsx";
 import {CryptoService} from "../../services/CryptoService.ts";
 import {useAtom} from "jotai/index";
 import {DerivedAtom} from "../../atoms/DerivedKeyAtom.tsx";
-import {red} from "@mui/material/colors";
 import Avatar from "@mui/material/Avatar";
 
 interface passwordProps {
@@ -95,9 +94,7 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords, re
   };
 
   return (
-      <Container sx={{
-        marginBottom: "10vh"
-      }}>
+      <Container>
         <Container sx={{
           width: "100vw",
           height: "10vh",
@@ -106,7 +103,7 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords, re
           flexWrap: "wrap",
           justifyContent: "space-between",
         }}>
-          <Typography variant="h3" sx={{paddingBottom: 1.75, alignSelf: "flex-start", position: "absolute"}}>
+          <Typography variant="h3" sx={{paddingBottom: 1.75, alignSelf: "flex-start"}}>
             Passwords
           </Typography>
         </Container>

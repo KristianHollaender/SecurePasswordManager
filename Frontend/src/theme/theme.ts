@@ -30,13 +30,14 @@ export const defaultTheme = createTheme({
     },
     MuiCssBaseline: {
       styleOverrides: `
-      html, body, #root {
+      html, body {
         height: 100%;
         margin: 0;
         background: linear-gradient(to left, #000000, #0a3d62);
         background-attachment: fixed;
         background-repeat: no-repeat;
         background-size: cover;
+        overflow-x: hidden;
       }
       `,
     },
