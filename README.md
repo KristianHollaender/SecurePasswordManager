@@ -16,9 +16,10 @@
 - Go to `../SecuriKey` and do following command
 ```
 docker compose up --build
-Go to the assigned localhost frontend port
-Create an account, sign in and happy testing!
 ```
+- Go to the assigned localhost frontend port
+- Create an account, sign in and happy testing!
+
 - To stop application do the following command(s)
 ```
 docker compose down
