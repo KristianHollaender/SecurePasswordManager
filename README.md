@@ -47,6 +47,9 @@ For a user to be able to access their credentials across devices, the following 
 ### Sign-In
 ![image](https://github.com/user-attachments/assets/b7aa1be3-7e0c-4db7-8760-85591f574c91)
 
+### Sign-Up
+![image](https://github.com/user-attachments/assets/cedb896b-e13f-4aec-a260-c6b982aee6fa)
+
 ### Home without passwords
 ![image](https://github.com/user-attachments/assets/82bcc302-b560-45b4-876f-8f1e532ef17d)
 
