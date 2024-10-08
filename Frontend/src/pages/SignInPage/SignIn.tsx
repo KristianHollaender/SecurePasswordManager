@@ -1,11 +1,9 @@
 import * as React from "react";
-import {ChangeEvent, useState} from "react";
+import {useState} from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
@@ -32,13 +30,8 @@ export const SignIn: React.FunctionComponent = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
-
-  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setRememberMe(event.target.checked);
-  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -51,6 +44,7 @@ export const SignIn: React.FunctionComponent = () => {
         email: email,
         password: password,
       }).then(response => {
+        localStorage.setItem("token", response['accessToken']);
         setToken(response['accessToken']);
       });
 
@@ -79,12 +73,22 @@ export const SignIn: React.FunctionComponent = () => {
           </Container>
           <CssBaseline />
           <Box className={"containerBox"}>
-            <Avatar className="avatar" sx={{ backgroundColor: "primary.main" }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
+            {loading && (
+                <CircularProgress
+                    size={48}
+                    sx={{marginBottom: 2}}
+                />
+            )}
+            {!loading && (
+                <Avatar className="avatar" sx={{ backgroundColor: "primary.main" }}>
+                  <LockOutlinedIcon />
+                </Avatar>
+            )}
+            {!loading && (
+                <Typography component="h1" variant="h5">
+                  Sign in
+                </Typography>
+            )}
             <Box
                 component="form"
                 className="formBox"
@@ -120,24 +124,6 @@ export const SignIn: React.FunctionComponent = () => {
                     <Alert severity="error">{errorMessage}</Alert>
                   </Grid>
               )}
-              <FormControlLabel
-                  control={
-                    <Checkbox
-                        value="remember"
-                        color="primary"
-                        checked={rememberMe}
-                        onChange={handleCheckboxChange}
-                        style={{justifyContent: "flex-start"}}
-                    />
-                  }
-                  label="Remember me"
-              />
-              {loading && (
-                  <CircularProgress
-                      size={32}
-                      style={{ marginLeft: 200, marginTop: 10 }}
-                  />
-              )}
 
               <Grid className="submitButtonGrid">
                 <Button
@@ -145,7 +131,7 @@ export const SignIn: React.FunctionComponent = () => {
                     fullWidth
                     variant="contained"
                     className="submitButton"
-                    sx={{ backgroundColor: "primary.main" }}
+                    sx={{ backgroundColor: "primary.main", marginTop: 2 }}
                 >
                   Sign In
                 </Button>

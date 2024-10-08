@@ -26,6 +26,8 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords, re
   const cryptoService = new CryptoService();
   const [decryptedNames, setDecryptedNames] = useState<string[]>([]);
   const [decryptedPasswords, setDecryptedPasswords] = useState<string[]>([]);
+  const [derivedKey] = useAtom(DerivedAtom);
+
 
   useEffect(() => {
     const decryptAllNames = async () => {
@@ -48,7 +50,7 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords, re
       const decryptedPasswordsArray = await Promise.all(
           passwords.map(async (password) => {
             const decrypted = await decryptText(password.encryptedPassword);
-            return decrypted || ""; // Return the decrypted name or empty string if decryption fails
+            return decrypted || "";
           })
       );
       setDecryptedPasswords(decryptedPasswordsArray);
@@ -59,7 +61,6 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords, re
     }
   }, [passwords]);
 
-  const [derivedKey] = useAtom(DerivedAtom);
 
   const handleButtonClick = () => {
     setIsDialogOpen(true);
@@ -153,7 +154,7 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords, re
                               {decryptedNames[index] ? decryptedNames[index].charAt(0).toUpperCase() : "L"}
                             </Avatar>
                           }
-                          title={decryptedNames[index] || "Loading..."}
+                          title={decryptedNames[index] || "Error..."}
                           titleTypographyProps={{variant: "h5"}}
                           sx={{
                             paddingBottom: 5,
@@ -175,7 +176,7 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords, re
                                 disabled={true}
                                 label={"Password"}
                                 type={showPassword[password.id] ? "text" : "password"}
-                                value={decryptedPasswords[index] || "Loading..."}
+                                value={decryptedPasswords[index] || "Error..."}
                                 variant="standard"
                                 InputProps={{disableUnderline: true}}
                                 sx={{border: "none", width: "70%"}}

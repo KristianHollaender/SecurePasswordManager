@@ -33,8 +33,6 @@ export const Home: React.FunctionComponent = () => {
       setUser(me);
       const derivedKey = await cryptoService.deriveKey(masterPassword, me.salt);
       setDerivedKey(derivedKey);
-      console.log(me)
-      console.log(derivedKey)
     };
 
     fetchUserInfo()

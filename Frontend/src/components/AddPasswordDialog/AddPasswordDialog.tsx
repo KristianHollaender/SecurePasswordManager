@@ -28,11 +28,8 @@ export const AddPasswordDialog: React.FunctionComponent<AddPasswordDialogProps> 
 
   const handleAddDialog = async () => {
     const cryptoKey = await cryptoService.importDerivedKey(derivedKey!);
-    const { ciphertext: nameCipherText, iv: nameIv } = await cryptoService.encrypt(cryptoKey, name);
-    const { ciphertext: passwordCipherText, iv: passwordIv } = await cryptoService.encrypt(cryptoKey, password);
-
-    console.log({nameIv})
-    console.log({passwordIv})
+    const {ciphertext: nameCipherText} = await cryptoService.encrypt(cryptoKey, name);
+    const {ciphertext: passwordCipherText} = await cryptoService.encrypt(cryptoKey, password);
 
     const dto: CreatePasswordDTO = {
       userId: user!.id,

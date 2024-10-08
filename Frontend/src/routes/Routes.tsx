@@ -4,6 +4,7 @@ import {SignIn} from "../pages/SignInPage/SignIn.tsx";
 import * as React from "react";
 import {Home} from "../pages/HomePage/Home.tsx";
 import SignUp from "../pages/SignUpPage/SignUp.tsx";
+import AuthGuard from "./AuthGuard.tsx";
 
 
 const RoutesComponent: React.FunctionComponent = () => {
@@ -17,7 +18,9 @@ const RoutesComponent: React.FunctionComponent = () => {
         <Route
             path="home"
             element={
+              <AuthGuard>
                 <Home />
+              </AuthGuard>
             }
         />
       </Routes>
