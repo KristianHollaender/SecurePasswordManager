@@ -10,7 +10,8 @@
 - **Docker (Desktop)** is required for composing this application.
 
 ### Running the application
-- Go to `../eCommerce` and do following command
+- Clone the repository
+- Go to `../SecuriKey` and do following command
 ```
 docker compose up --build
 ```
