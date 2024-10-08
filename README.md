@@ -47,3 +47,16 @@ For a user to be able to access their credentials across devices, the following 
 
 ## Screenshots of the application
 
+### Sign-In
+![image](https://github.com/user-attachments/assets/b7aa1be3-7e0c-4db7-8760-85591f574c91)
+
+### Home
+![image](https://github.com/user-attachments/assets/82bcc302-b560-45b4-876f-8f1e532ef17d)
+
+### Add Password Dialog
+![image](https://github.com/user-attachments/assets/24a30dc1-6eca-41ef-8a50-41ca7a7ea99c)
+
+### Creating Password
+![image](https://github.com/user-attachments/assets/acb47be7-f211-4a99-9d5b-1d5da6a655a1)
+
+
