@@ -2,7 +2,6 @@ import * as React from "react";
 import {useState} from "react";
 import {Drawer, List, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import LockPersonIcon from '@mui/icons-material/LockPerson';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import LogoutIcon from '@mui/icons-material/Logout';
 import {ThemeProvider} from "@mui/material/styles";
@@ -12,7 +11,7 @@ import Menu from "@mui/material/Menu";
 import {useNavigate} from "react-router-dom";
 import "./SideBar.css";
 import Box from "@mui/material/Box";
-import {Help, QuestionMark, QuestionMarkOutlined} from "@mui/icons-material";
+import {Help} from "@mui/icons-material";
 
 
 export const SideBar: React.FunctionComponent = () => {

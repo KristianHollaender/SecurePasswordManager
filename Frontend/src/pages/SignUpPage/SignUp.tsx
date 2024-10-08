@@ -18,18 +18,17 @@ import {defaultTheme} from "../../theme/theme.ts";
 import "./SignUp.css";
 import {Copyright} from "../../components/copyright.tsx";
 import {UserService} from "../../services/UserService.ts";
-import {useAtom} from "jotai/index";
-import {DerivedAtom} from "../../atoms/DerivedKeyAtom.tsx";
 import {CryptoService} from "../../services/CryptoService.ts";
+import {useNavigate} from "react-router-dom";
 
 export default function SignUp() {
   const userService =  new UserService();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const [, setDerivedKey] = useAtom(DerivedAtom);
   const [masterPassword, setMasterPassword] = useState<string>("");
   const cryptoService = new CryptoService();
 
@@ -184,9 +183,9 @@ export default function SignUp() {
 
           <Snackbar
               open={openSnackbar}
-              autoHideDuration={3500}
+              autoHideDuration={2500}
               onClose={() => {
-                // TODO Navigation here
+                navigate("/sign-in");
                 setOpenSnackbar(false);
               }}
               message="You have been signed up and will be redirected to login"
