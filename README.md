@@ -37,7 +37,7 @@ docker compose up --build
 ### Pitfalls and limitations in the application
 - **Weak user passwords** can still undermine security, even with strong encryption.
 - **No two-factor authentication** (2FA) implemented, making it easier for attackers to gain access with stolen credentials.
-- **Limited scalability** due to the use of SQLite for data storage (best suited for small to medium applications).
+- **Limited scalability** due to the use of SQLite for data storage.
 
 ## Screenshots of the application
 
