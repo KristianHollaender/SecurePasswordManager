@@ -14,6 +14,7 @@
 - Go to `../SecuriKey` and do following command
 ```
 docker compose up --build
+Go to the assigned localhost frontend port
 ```
 - To stop application do the following command(s)
 ```
