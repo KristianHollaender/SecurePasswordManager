@@ -11,7 +11,6 @@ import Menu from "@mui/material/Menu";
 import {useNavigate} from "react-router-dom";
 import "./SideBar.css";
 import Box from "@mui/material/Box";
-import {Help} from "@mui/icons-material";
 
 
 export const SideBar: React.FunctionComponent = () => {
@@ -68,12 +67,6 @@ export const SideBar: React.FunctionComponent = () => {
                 <LockPersonIcon sx={{color: "primary.main"}}/>
               </ListItemIcon>
               <ListItemText primary="Passwords" sx={{color: "white"}}/>
-            </ListItemButton>
-            <ListItemButton className={"listItem"} onClick={() => console.log("hey")}>
-              <ListItemIcon>
-                <Help sx={{ color: "primary.main" }} />
-              </ListItemIcon>
-              <ListItemText primary="About" sx={{ color: "white" }} />
             </ListItemButton>
 
 

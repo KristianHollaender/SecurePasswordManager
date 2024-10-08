@@ -51,8 +51,9 @@ public class PasswordController(DatabaseContext context, IMapper mapper) : Contr
     {
         try
         {
+            var guid = Guid.Parse(passwordId);
             var passwordToRemove =
-                await context.Passwords.FirstOrDefaultAsync(p => p.UserId == userId && p.Id.ToString() == passwordId);
+                await context.Passwords.FirstOrDefaultAsync(p => p.UserId == userId && p.Id == guid);
 
             if (passwordToRemove == null)
             {
@@ -61,7 +62,7 @@ public class PasswordController(DatabaseContext context, IMapper mapper) : Contr
 
             context.Passwords.Remove(passwordToRemove);
             await context.SaveChangesAsync();
-            return Created();
+            return Ok();
         }
         catch (Exception e)
         {

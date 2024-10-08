@@ -34,4 +34,18 @@ export class PasswordService {
             throw error;
         }
     }
+
+    deletePassword = async (passwordId: string, userId: string, token: string) => {
+        try {
+            const response = await this.api.delete(`password/${passwordId}/${userId}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
 }

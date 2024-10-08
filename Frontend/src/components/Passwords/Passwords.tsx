@@ -8,12 +8,15 @@ import "./Passwords.css"
 import {useEffect, useState} from "react";
 import {Password} from "../../models/Password.ts";
 import TextField from "@mui/material/TextField";
-import {Visibility, VisibilityOff} from "@mui/icons-material";
+import {Delete, Visibility, VisibilityOff} from "@mui/icons-material";
 import {AddPasswordDialog} from "../AddPasswordDialog/AddPasswordDialog.tsx";
 import {CryptoService} from "../../services/CryptoService.ts";
 import {useAtom} from "jotai/index";
 import {DerivedAtom} from "../../atoms/DerivedKeyAtom.tsx";
 import Avatar from "@mui/material/Avatar";
+import {PasswordService} from "../../services/PasswordService.ts";
+import {TokenAtom} from "../../atoms/TokenAtom.tsx";
+import {UserAtom} from "../../atoms/UserAtom.tsx";
 
 interface passwordProps {
   passwords: Password[];
@@ -24,9 +27,12 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords, re
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [showPassword, setShowPassword] = useState<{ [key: string]: boolean }>({});
   const cryptoService = new CryptoService();
+  const passwordService = new PasswordService();
   const [decryptedNames, setDecryptedNames] = useState<string[]>([]);
   const [decryptedPasswords, setDecryptedPasswords] = useState<string[]>([]);
   const [derivedKey] = useAtom(DerivedAtom);
+  const [token] = useAtom(TokenAtom);
+  const [user] = useAtom(UserAtom);
 
 
   useEffect(() => {
@@ -69,6 +75,12 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords, re
   const handleDialogClose = () => {
     setIsDialogOpen(false);
   };
+
+  const handleDeletePassword = async (passwordId: string, userId: string) => {
+    return await passwordService.deletePassword(passwordId, userId, token).then(() =>{
+      refreshPasswords();
+    });
+  }
 
   const handleTogglePassword = (id: string) => {
     setShowPassword((prev) => ({
@@ -155,7 +167,7 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords, re
                             </Avatar>
                           }
                           title={decryptedNames[index] || "Error..."}
-                          titleTypographyProps={{variant: "h5"}}
+                          titleTypographyProps={{variant: "subtitle1"}}
                           sx={{
                             paddingBottom: 5,
                             wordWrap: "break-word",
@@ -198,16 +210,18 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords, re
                       </Container>
                       <Container sx={{
                         display: "flex",
-                        justifyContent: "flex-end",
-                        alignItems: "flex-end",
+                        justifyContent: "flex-start",
+                        alignItems: "flex-start",
                         verticalAlign: "flex-end",
-                        width: "80%",
-                        height: "30%",
+                        width: "100%",
                       }}>
-                        <Box sx={{}}>
-                          <Typography variant="caption" sx={{color: "rgb(149,149,149)"}}>
+                        <Box sx={{marginTop: 6.5}}>
+                          <Typography variant="caption" sx={{color: "rgb(149,149,149)", paddingRight: 4.75}}>
                             {formatDate(password.createdAt)}
                           </Typography>
+                          <IconButton  sx={{color: "#ff5959"}} onClick={() => handleDeletePassword(password.id, user!.id)}>
+                            <Delete/>
+                          </IconButton>
                         </Box>
                       </Container>
                     </CardContent>
