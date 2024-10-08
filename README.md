@@ -4,6 +4,8 @@
 ### Initial drawing of the application structure
 ![SecuriKey](https://github.com/user-attachments/assets/b55158a8-cd8b-4501-89f4-2ebd416adba1)
 
+### Updated drawing of the application structure
+
 
 ## Setup Guide
 - **.NET8** is required for this application.
