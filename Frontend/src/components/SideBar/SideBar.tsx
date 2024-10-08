@@ -41,7 +41,7 @@ export const SideBar: React.FunctionComponent = () => {
             className="drawer"
             sx={{
               "& .MuiDrawer-paper": {
-                width: "280px",
+                width: "20vw",
                 backgroundColor: defaultTheme.palette.background.default,
                 color: defaultTheme.palette.secondary.main,
                 display: "flex",

@@ -13,6 +13,8 @@ import {AddPasswordDialog} from "../AddPasswordDialog/AddPasswordDialog.tsx";
 import {CryptoService} from "../../services/CryptoService.ts";
 import {useAtom} from "jotai/index";
 import {DerivedAtom} from "../../atoms/DerivedKeyAtom.tsx";
+import {red} from "@mui/material/colors";
+import Avatar from "@mui/material/Avatar";
 
 interface passwordProps {
   passwords: Password[];
@@ -76,7 +78,7 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords, re
   };
 
   const decryptText = async (text: string) => {
-    if(!derivedKey) return;
+    if (!derivedKey) return;
     const key = await cryptoService.importDerivedKey(derivedKey);
     return await cryptoService.decrypt(key, text);
   }
@@ -92,19 +94,17 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords, re
     });
   };
 
-  useEffect(() => {
-
-  }, [passwords]);
-
   return (
-      <Container>
+      <Container sx={{
+        marginBottom: "10vh"
+      }}>
         <Container sx={{
           width: "100vw",
           height: "10vh",
           display: "flex",
           flexDirection: "row",
           flexWrap: "wrap",
-          justifyContent: "space-between"
+          justifyContent: "space-between",
         }}>
           <Typography variant="h3" sx={{paddingBottom: 1.75, alignSelf: "flex-start", position: "absolute"}}>
             Passwords
@@ -113,7 +113,7 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords, re
         <Container
             sx={{width: "100vw", height: "85vh", display: "flex", flexDirection: "row", flexWrap: "wrap", gap: 4}}>
           <Box>
-            <Card className={"addCard"} sx={{width: "280px", height: "340px", borderRadius: 4}}>
+            <Card className={"addCard"} sx={{width: "260px", height: "320px", borderRadius: 4}}>
               <CardContent>
                 <CardActions>
                   <Box sx={{
@@ -147,10 +147,17 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords, re
           {passwords && passwords.length > 0 && passwords.map((password, index) => (
               <Box key={password.id || index}>
                 <Box key={password.id || index}>
-                  <Card className={"standardCard"} sx={{width: "280px", height: "340px", borderRadius: 4, display: "flex" }}>
+                  <Card className={"standardCard"}
+                        sx={{width: "260px", height: "320px", borderRadius: 4, display: "flex"}}>
                     <CardContent>
                       <CardHeader
+                          avatar={
+                            <Avatar sx={{backgroundColor: "#4facc3"}} aria-label="recipe">
+                              {decryptedNames[index] ? decryptedNames[index].charAt(0).toUpperCase() : "L"}
+                            </Avatar>
+                          }
                           title={decryptedNames[index] || "Loading..."}
+                          titleTypographyProps={{variant: "h5"}}
                           sx={{
                             paddingBottom: 5,
                             wordWrap: "break-word",
@@ -174,7 +181,7 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords, re
                                 value={decryptedPasswords[index] || "Loading..."}
                                 variant="standard"
                                 InputProps={{disableUnderline: true}}
-                                sx={{border: "none", width: "90%"}}
+                                sx={{border: "none", width: "70%"}}
                             />
                             <IconButton onClick={() => handleTogglePassword(password.id)}>
                               {showPassword[password.id] ? <VisibilityOff/> : <Visibility/>}
@@ -191,16 +198,15 @@ export const Passwords: React.FunctionComponent<passwordProps> = ({passwords, re
                           </Box>
                         </Box>
                       </Container>
-
-                      <Container sx={{display: "flex",
+                      <Container sx={{
+                        display: "flex",
                         justifyContent: "flex-end",
                         alignItems: "flex-end",
                         verticalAlign: "flex-end",
-                        width: "100%",
-                        height: "40%",
+                        width: "80%",
+                        height: "30%",
                       }}>
-                        <Box sx={{
-                        }}>
+                        <Box sx={{}}>
                           <Typography variant="caption" sx={{color: "rgb(149,149,149)"}}>
                             {formatDate(password.createdAt)}
                           </Typography>
