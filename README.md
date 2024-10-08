@@ -38,7 +38,7 @@ ctrl+c + docker compose down
 - **Argon2Id** used to securely hash passwords.
 - Each password is hashed with a unique salt.
 - **Hashed data** only stored in the SQLite database; no plaintext passwords are stored.
-- Every HTTP request sent is done using hashed data.
+- Every HTTP request sent is done using hashed data, decryption only happens on the frontend.
 - **Encryption keys** are derived using Argon2Id with a strong salt, increasing resistance to brute-force attacks.
 
 ### Pitfalls and limitations in the application
