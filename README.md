@@ -1,12 +1,8 @@
 # SecurePasswordManager
 ## SSD - PBSW project
 
-### Initial drawing of the application structure
+### Application Structure
 ![image](https://github.com/user-attachments/assets/080235c6-d8ca-420c-afe9-a359c4fdf567)
-
-
-### Updated drawing of the application structure
-
 
 ## Setup Guide
 - **.NET8** is required for this application.
