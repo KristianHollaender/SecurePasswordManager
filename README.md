@@ -32,6 +32,7 @@ docker compose up --build
 - Each password is hashed with a unique salt.
 - **Hashed data** only stored in the SQLite database; no plaintext passwords are stored.
 - Every HTTP request sent is done using hashed data, decryption only happens on the frontend.
+- If the database is compromised, the attackers cannot access the users passwords, because of the encryption. 
 - **Encryption keys** are derived using Argon2Id with a strong salt, increasing resistance to brute-force attacks.
 
 ### Pitfalls and limitations in the application
