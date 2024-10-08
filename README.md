@@ -51,7 +51,7 @@ For a user to be able to access their credentials across devices, the following 
 ### Sign-In
 ![image](https://github.com/user-attachments/assets/b7aa1be3-7e0c-4db7-8760-85591f574c91)
 
-### Home
+### Home without passwords
 ![image](https://github.com/user-attachments/assets/82bcc302-b560-45b4-876f-8f1e532ef17d)
 
 ### Add Password Dialog
@@ -59,6 +59,9 @@ For a user to be able to access their credentials across devices, the following 
 
 ### Creating Password
 ![image](https://github.com/user-attachments/assets/acb47be7-f211-4a99-9d5b-1d5da6a655a1)
+
+### Home with passwords
+![image](https://github.com/user-attachments/assets/848dfbea-27d4-4ac2-83bc-b5b3d36fe3e6)
 
 ## :computer: Technologies
 [![SQLite](https://img.shields.io/badge/SQLite-%2307405e.svg?logo=sqlite&logoColor=white)](#)
