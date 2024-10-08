@@ -39,5 +39,10 @@ docker compose up --build
 - **No two-factor authentication** (2FA) implemented, making it easier for attackers to gain access with stolen credentials.
 - **Limited scalability** due to the use of SQLite for data storage.
 
+### Plan for how a user can access their credentials across devices.
+For a user to be able to access their credentials across devices, the following changes would need to be made:
+- Deploy both the backend and the frontend.
+- Find a secure place to host the SQL-database.
+
 ## Screenshots of the application
 
