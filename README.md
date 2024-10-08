@@ -2,7 +2,8 @@
 ## SSD - PBSW project
 
 ### Initial drawing of the application structure
-![SecuriKey](https://github.com/user-attachments/assets/b55158a8-cd8b-4501-89f4-2ebd416adba1)
+![image](https://github.com/user-attachments/assets/080235c6-d8ca-420c-afe9-a359c4fdf567)
+
 
 ### Updated drawing of the application structure
 
@@ -59,4 +60,21 @@ For a user to be able to access their credentials across devices, the following 
 ### Creating Password
 ![image](https://github.com/user-attachments/assets/acb47be7-f211-4a99-9d5b-1d5da6a655a1)
 
+## :computer: Technologies
+[![SQLite](https://img.shields.io/badge/SQLite-%2307405e.svg?logo=sqlite&logoColor=white)](#)
+[![.NET](https://img.shields.io/badge/.NET-512BD4?logo=dotnet&logoColor=fff)](#)
+[![C#](https://custom-icon-badges.demolab.com/badge/C%23-%23239120.svg?logo=cshrp&logoColor=white)](#)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=fff)](#)
+[![NuGet](https://img.shields.io/badge/NuGet-004880?logo=nuget&logoColor=fff)](#)
+[![React](https://img.shields.io/badge/React-%2320232a.svg?logo=react&logoColor=%2361DAFB)](#)
+[![React Router](https://img.shields.io/badge/React_Router-CA4245?logo=react-router&logoColor=white)](#)
+[![CSS](https://img.shields.io/badge/CSS-1572B6?logo=css3&logoColor=fff)](#)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff)](#)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=000)](#)
 
+
+## :pencil2: Authors
+
+* [@Andylaa10](https://github.com/Andylaa10/)
+* [@KristianHollaender](https://github.com/KristianHollaender)
+* [@MarcusIversen](https://github.com/MarcusIversen)
